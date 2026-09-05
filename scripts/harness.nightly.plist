@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- launchd 登録用テンプレート。~/Library/LaunchAgents/ に置き、
+     `launchctl load ~/Library/LaunchAgents/com.example.harness.nightly.plist` で登録する。
+     Label の __YOUR_HARNESS_LABEL__ とパス2箇所 __YOUR_HARNESS_DIR__ を置き換える。
+     Label の例: com.example.harness.nightly。ファイル名も Label に合わせる。
+     Label に実名やアカウント名を入れない。設定ファイル名は記事やログに引用されうる。 -->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>__YOUR_HARNESS_LABEL__</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>__YOUR_HARNESS_DIR__/scripts/run_nightly.sh</string>
+  </array>
+  <!-- 定時実行の時刻。最初は1日1回で始め、完走を確認してから増やす。
+       毎時00分ちょうどを避ける。他の定時ジョブと競合させない -->
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>3</integer>
+      <key>Minute</key>
+      <integer>33</integer>
+    </dict>
+  </array>
+  <key>StandardErrorPath</key>
+  <string>__YOUR_HARNESS_DIR__/reports/_runner_logs/launchd.err.log</string>
+  <key>StandardOutPath</key>
+  <string>__YOUR_HARNESS_DIR__/reports/_runner_logs/launchd.out.log</string>
+</dict>
+</plist>
